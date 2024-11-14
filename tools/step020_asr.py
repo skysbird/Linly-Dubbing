@@ -79,7 +79,7 @@ def transcribe_audio(method, folder, model_name: str = 'large', download_root='m
         logger.error('Invalid ASR method')
         raise ValueError('Invalid ASR method')
 
-    transcript = merge_segments(transcript)
+#    transcript = merge_segments(transcript)
     with open(os.path.join(folder, 'transcript.json'), 'w', encoding='utf-8') as f:
         json.dump(transcript, f, indent=4, ensure_ascii=False)
     logger.info(f'Transcribed {wav_path} successfully, and saved to {os.path.join(folder, "transcript.json")}')

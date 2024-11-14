@@ -87,40 +87,55 @@ def get_info_list_from_url(url, num_videos):
 
     # return video_info_list
 
-def download_from_url(url, folder_path, resolution='1080p', num_videos=5):
-    resolution = resolution.replace('p', '')
-    if isinstance(url, str):
-        url = [url]
+def download_from_url(url, folder_path, file, resolution='1080p', num_videos=5):
 
-    # Download JSON information first
-    ydl_opts = {
-        # 'format': 'b',
-        "None":"b",
-        'dumpjson': True,
-        'playlistend': num_videos,
-        'ignoreerrors': True,
-        'cookies-from-browser': 'chrome'
-    }
 
-    video_info_list = []
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        for u in url:
-            result = ydl.extract_info(u, download=False)
-            # print(result)
-       
 
-            if 'entries' in result:
-                # Playlist
-                video_info_list.extend(result['entries'])
-            else:
-                # Single video
-                video_info_list.append(result)
-        
-    # Now download videos with sanitized titles
-    example_output_folder = download_videos(video_info_list, folder_path, resolution)
-    if os.path.exists(os.path.join(example_output_folder, 'download.info.json')):
-        download_info_json = json.load(open(os.path.join(example_output_folder, 'download.info.json'), 'r', encoding='utf-8'))
-    return f"All videos have been downloaded under the {folder_path} folder", os.path.join(example_output_folder, 'download.mp4'), download_info_json
+    if file is not None:
+        # 获取文件路径
+        file_path = uploaded_file.name
+
+        # 假设你要将文件复制到指定的输出文件夹
+        output_path = os.path.join(folder_path, os.path.basename(file_path))
+        os.makedirs(output_folder, exist_ok=True)
+        with open(output_path, "wb") as f:
+            f.write(uploaded_file.read())
+
+        return f"视频已保存到: {output_path}"
+    else:
+        resolution = resolution.replace('p', '')
+        if isinstance(url, str):
+            url = [url]
+
+        # Download JSON information first
+        ydl_opts = {
+            # 'format': 'b',
+            "None":"b",
+            'dumpjson': True,
+            'playlistend': num_videos,
+            'ignoreerrors': True,
+            'cookies-from-browser': 'chrome'
+        }
+
+        video_info_list = []
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            for u in url:
+                result = ydl.extract_info(u, download=False)
+                # print(result)
+           
+
+                if 'entries' in result:
+                    # Playlist
+                    video_info_list.extend(result['entries'])
+                else:
+                    # Single video
+                    video_info_list.append(result)
+            
+        # Now download videos with sanitized titles
+        example_output_folder = download_videos(video_info_list, folder_path, resolution)
+        if os.path.exists(os.path.join(example_output_folder, 'download.info.json')):
+            download_info_json = json.load(open(os.path.join(example_output_folder, 'download.info.json'), 'r', encoding='utf-8'))
+        return f"All videos have been downloaded under the {folder_path} folder", os.path.join(example_output_folder, 'download.mp4'), download_info_json
 
 if __name__ == '__main__':
     # Example usage

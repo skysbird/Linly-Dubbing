@@ -148,7 +148,7 @@ def summarize(info, transcript, target_language='简体中文', method = 'LLM'):
     ]
     retry_message=''
     success = False
-    for retry in range(9):
+    for retry in range(1):
         try:
             messages = [
                 {'role': 'system', 'content': f'You are a expert in the field of this video. Please summarize the video in JSON format.\n```json\n{{"title": "the title of the video", "summary", "the summary of the video"}}\n```'},
@@ -187,7 +187,11 @@ def summarize(info, transcript, target_language='简体中文', method = 'LLM'):
             time.sleep(1)
             
     if not success:
-        raise Exception(f'总结失败')
+        #raise Exception(f'总结失败')
+        summary = {
+            'title': 'Unknown',
+            'summary': 'Unknown'
+        }
             
     messages = [
         {'role': 'system',

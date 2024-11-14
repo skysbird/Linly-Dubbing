@@ -15,6 +15,7 @@ full_auto_interface = gr.Interface(
         gr.Textbox(label='视频输出文件夹', value='videos'),
         gr.Textbox(label='视频URL', placeholder='请输入Youtube或Bilibili的视频、播放列表或频道的URL', 
                    value='https://www.bilibili.com/video/BV1kr421M7vz/'),
+        gr.File(label='上传视频文件', file_types=['.mp4', '.avi', '.mkv']),
         gr.Slider(minimum=1, maximum=100, step=1, label='下载视频数量', value=5),
         gr.Radio(['4320p', '2160p', '1440p', '1080p', '720p', '480p', '360p', '240p', '144p'], label='分辨率', value='1080p'),
 
@@ -58,6 +59,7 @@ download_interface = gr.Interface(
         gr.Textbox(label='视频URL', placeholder='请输入Youtube或Bilibili的视频、播放列表或频道的URL', 
                    value='https://www.bilibili.com/video/BV1kr421M7vz/'),
         gr.Textbox(label='视频输出文件夹', value='videos'),
+        gr.File(label='上传视频文件', file_types=['.mp4', '.avi', '.mkv']),
         gr.Radio(['4320p', '2160p', '1440p', '1080p', '720p', '480p', '360p', '240p', '144p'], label='分辨率', value='1080p'),
         gr.Slider(minimum=1, maximum=100, step=1, label='下载视频数量', value=5),
         # gr.Checkbox(label='单个视频', value=False),
@@ -198,8 +200,8 @@ app = gr.TabbedInterface(
 
 if __name__ == '__main__':
     app.launch(
-        server_name="127.0.0.1", 
+        server_name="0",
         server_port=6006,
-        share=True,
-        inbrowser=True
+        share=False,
+        inbrowser=False,
     )

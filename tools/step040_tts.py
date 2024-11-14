@@ -10,6 +10,7 @@ from .utils import save_wav, save_wav_norm
 # from .step041_tts_bytedance import tts as bytedance_tts
 from .step042_tts_xtts import tts as xtts_tts
 from .step043_tts_cosyvoice import tts as cosyvoice_tts
+from .step045_tts_megatts import tts as megatts_tts
 from .step044_tts_edge_tts import tts as edge_tts
 from .cn_tx import TextNorm
 from audiostretchy.stretch import stretch_audio
@@ -86,7 +87,8 @@ def generate_wavs(method, folder, target_language='中文', voice = 'zh-CN-Xiaox
         elif method == 'xtts':
             xtts_tts(text, output_path, speaker_wav, target_language = target_language)
         elif method == 'cosyvoice':
-            cosyvoice_tts(text, output_path, speaker_wav, target_language = target_language)
+#            cosyvoice_tts(text, output_path, speaker_wav, target_language = target_language)
+            megatts_tts(text,output_path,speaker_wav)
         elif method == 'EdgeTTS':
             edge_tts(text, output_path, target_language = target_language, voice = voice)
         start = line['start']
